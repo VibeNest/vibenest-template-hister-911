@@ -1,6 +1,8 @@
 services:
   app:
     image: ghcr.io/asciimoo/hister:v0.17.0@sha256:2894138653cc11fde955cd9e53c51385fbaa14d236730bbefff2b64b841d7395
+    mem_limit: 256m
+    cpus: 0.5
     init: true
     restart: unless-stopped
     read_only: true
