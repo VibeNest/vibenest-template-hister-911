@@ -1,0 +1,28 @@
+services:
+  app:
+    image: ghcr.io/asciimoo/hister:v0.17.0@sha256:2894138653cc11fde955cd9e53c51385fbaa14d236730bbefff2b64b841d7395
+    init: true
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    ports:
+      - "4433:4433"
+    environment:
+      HISTER__SERVER__ADDRESS: 0.0.0.0:4433
+      HISTER__SERVER__BASE_URL: ${APP_URL}
+      HISTER__APP__ACCESS_TOKEN: ${ADMIN_PASSWORD}
+      HISTER__APP__USER_HANDLING: "false"
+      HISTER__APP__PUBLIC: "false"
+      HISTER__INDEXER__DETECT_LANGUAGES: "false"
+      HISTER__SEMANTIC_SEARCH__ENABLE: "false"
+      HISTER__APP__LOG_LEVEL: info
+    volumes:
+      - hister_data:/hister/data
+    tmpfs:
+      - /tmp:noexec,nosuid,size=64m
+
+volumes:
+  hister_data:
